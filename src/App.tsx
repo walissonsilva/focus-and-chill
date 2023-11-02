@@ -3,4 +3,8 @@ import { createRoot } from "react-dom/client";
 const rootNode = document.getElementById("root");
 
 const root = createRoot(rootNode);
-root.render(<h2>Focus & Chillout</h2>);
+root.render(
+  <main className="dark p-8">
+    <h1 className="text-4xl">Focus & Chillout</h1>
+  </main>
+);

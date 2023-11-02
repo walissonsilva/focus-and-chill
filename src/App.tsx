@@ -1,4 +1,6 @@
 import { createRoot } from "react-dom/client";
 
-const root = createRoot(document.body);
+const rootNode = document.getElementById("root");
+
+const root = createRoot(rootNode);
 root.render(<h2>Focus & Chillout</h2>);

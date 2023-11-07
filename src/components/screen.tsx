@@ -1,13 +1,13 @@
 import {
+  Bird,
   CloudLightning,
   CloudRain,
   Coffee,
-  Keyboard,
   PlayCircle,
   StopCircle,
 } from "lucide-react";
 import { Header } from "./header";
-import { Toggle } from "./ui/toggle";
+import { SoundToggle } from "./sound-toggle";
 import { Button } from "./ui/button";
 
 export const Screen = () => {
@@ -22,7 +22,7 @@ export const Screen = () => {
         >
           <p className="text-7xl">25:00</p>
           <div className="flex justify-center align-center gap-4 mt-4">
-            <Button variant="ghost" size="icon" className="">
+            <Button variant="ghost" size="icon">
               <StopCircle size={30} />
             </Button>
             <Button variant="ghost" size="icon">
@@ -32,18 +32,19 @@ export const Screen = () => {
         </section>
 
         <section className="flex flex-wrap max-w-[200px] gap-4">
-          <Toggle variant="outline" className="h-20 w-20">
-            <Coffee size={50} />
-          </Toggle>
-          <Toggle variant="outline" className="h-20 w-20">
-            <CloudRain size={50} />
-          </Toggle>
-          <Toggle variant="outline" className="h-20 w-20">
-            <CloudLightning size={50} />
-          </Toggle>
-          <Toggle variant="outline" className="h-20 w-20">
-            <Keyboard size={50} />
-          </Toggle>
+          <SoundToggle
+            icon={<Coffee />}
+            soundPath="src/sounds/coffee-shop.mp3"
+          />
+          <SoundToggle icon={<CloudRain />} soundPath="src/sounds/rain.mp3" />
+          <SoundToggle
+            icon={<CloudLightning />}
+            soundPath="src/sounds/thunderstorm.mp3"
+          />
+          <SoundToggle
+            icon={<Bird />}
+            soundPath="src/sounds/birds-nature.mp3"
+          />
         </section>
       </section>
     </main>

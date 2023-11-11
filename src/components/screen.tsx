@@ -9,7 +9,7 @@ export const Screen = () => {
       <Header />
 
       <section className="flex mt-10 items-center justify-center gap-8">
-        <PomodoroTimer initialPomodoroTimerInMinutes={25} />
+        <PomodoroTimer />
 
         <section className="grid grid-rows-2 grid-cols-2 gap-4">
           <SoundToggle

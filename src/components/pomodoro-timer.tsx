@@ -1,78 +1,130 @@
 import { PauseCircle, PlayCircle, StopCircle } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { PomodoroData, PomodoroStatus } from "../types/pomodoro";
 import { Button } from "./ui/button";
 
-interface PomodoroTimerProps {
-  initialPomodoroTimerInMinutes: number;
-}
+const timeForPomodoroStatusInSeconds: Record<PomodoroStatus, number> = {
+  [PomodoroStatus.FOCUS]: 0.15 * 60,
+  [PomodoroStatus.SHORT_BREAK]: 0.1 * 60,
+  [PomodoroStatus.LONG_BREAK]: 20 * 60,
+};
 
-export const PomodoroTimer: React.FC<PomodoroTimerProps> = ({
-  initialPomodoroTimerInMinutes,
-}) => {
-  const [pomodoroTimeInSeconds, setPomodoroTimeInSeconds] = useState(
-    initialPomodoroTimerInMinutes * 60
-  );
-  const [pomodoroInterval, setPomodoroInterval] = useState<
-    NodeJS.Timeout | undefined
-  >(undefined);
+export const PomodoroTimer: React.FC = () => {
+  const [pomodoro, setPomodoro] = useState({
+    time: timeForPomodoroStatusInSeconds[PomodoroStatus.FOCUS],
+    status: PomodoroStatus.FOCUS,
+    interval: undefined,
+  } as PomodoroData);
 
-  const minutesLeft = Math.floor(pomodoroTimeInSeconds / 60);
-  const secondsLeft = pomodoroTimeInSeconds % 60;
+  const minutesLeft = Math.floor(pomodoro.time / 60);
+  const secondsLeft = pomodoro.time % 60;
 
   function getFormattedLeftTime() {
     return `${String(minutesLeft).padStart(2, "0")}:${String(
-      secondsLeft
+      secondsLeft,
     ).padStart(2, "0")}`;
   }
 
-  function onPlayOrPause() {
-    if (pomodoroInterval) {
-      clearInterval(pomodoroInterval);
-      setPomodoroInterval(undefined);
-    } else {
-      if (pomodoroTimeInSeconds === initialPomodoroTimerInMinutes * 60) {
-        new Notification("Pomodoro timer has started", {
-          body: "It's time to focus!",
-        });
+  const handleInterval = useCallback(() => {
+    setPomodoro((currentPomodoroData) => {
+      const timeUpdated = currentPomodoroData.time - 1;
+      if (timeUpdated === 0) {
+        switch (currentPomodoroData.status) {
+          case PomodoroStatus.FOCUS:
+            return {
+              ...currentPomodoroData,
+              time: timeForPomodoroStatusInSeconds[PomodoroStatus.SHORT_BREAK],
+              status: PomodoroStatus.SHORT_BREAK,
+            };
+          default:
+            return {
+              ...currentPomodoroData,
+              time: timeForPomodoroStatusInSeconds[PomodoroStatus.FOCUS],
+              status: PomodoroStatus.FOCUS,
+            };
+        }
+      } else {
+        return {
+          ...currentPomodoroData,
+          time: timeUpdated,
+        };
       }
+    });
+  }, []);
 
-      setPomodoroInterval(
-        setInterval(() => {
-          setPomodoroTimeInSeconds((time) => time - 1);
-        }, 1000)
-      );
+  function onPlayOrPause() {
+    if (pomodoro.interval) {
+      clearInterval(pomodoro.interval);
+      setPomodoro({
+        ...pomodoro,
+        interval: undefined,
+      });
+    } else {
+      setPomodoro({
+        ...pomodoro,
+        interval: setInterval(handleInterval, 1000),
+      });
     }
   }
 
   function onStop() {
-    clearInterval(pomodoroInterval);
-    setPomodoroInterval(undefined);
-    setPomodoroTimeInSeconds(initialPomodoroTimerInMinutes * 60);
-
-    new Notification("Pomodoro timer is over", {
-      body: "It's time to take a break!",
-    });
+    clearInterval(pomodoro.interval);
+    setPomodoro((currentPomodoro) => ({
+      ...currentPomodoro,
+      interval: undefined,
+      time: timeForPomodoroStatusInSeconds[PomodoroStatus.FOCUS],
+    }));
   }
+
+  useEffect(() => {
+    if (!pomodoro.interval) return;
+
+    if (pomodoro.status === PomodoroStatus.FOCUS) {
+      const audio = new Audio("src/sounds/effects/after-break.mp3");
+      audio.play();
+
+      new Notification("Break timer is over", {
+        body: "Start your focus time!",
+      });
+    } else {
+      const audio = new Audio("src/sounds/effects/after-focus.mp3");
+      audio.play();
+
+      new Notification("Pomodoro timer is over", {
+        body: "It's time to take a break!",
+      });
+    }
+
+    clearInterval(pomodoro.interval);
+    setPomodoro((currentPomodoro) => ({
+      ...currentPomodoro,
+      interval: undefined,
+    }));
+  }, [pomodoro.status]);
 
   return (
     <section
       id="timer"
-      className="flex flex-col gap-4 flex-1 border-[1px] border-solid border-text-muted rounded-sm py-4 px-12"
+      className="flex flex-col gap-2 flex-1 border-[1px] border-solid border-text-muted rounded-sm py-4 px-12"
     >
-      <p className="text-7xl text-center">{getFormattedLeftTime()}</p>
-      <div className="flex justify-center align-center gap-4 mt-4">
+      <h2 className="text-center text-sm font-light">
+        {pomodoro.status === PomodoroStatus.FOCUS ? "Focus Time" : "Break Time"}
+      </h2>
+      <p className="text-6xl text-center">{getFormattedLeftTime()}</p>
+      <div className="flex justify-center align-center gap-4 mt-2">
         <Button
           variant="ghost"
           size="icon"
           disabled={
-            pomodoroTimeInSeconds === initialPomodoroTimerInMinutes * 60
+            pomodoro.time ===
+            timeForPomodoroStatusInSeconds[PomodoroStatus.FOCUS]
           }
           onClick={onStop}
         >
           <StopCircle size={30} />
         </Button>
         <Button variant="ghost" size="icon" onClick={onPlayOrPause}>
-          {!pomodoroInterval ? (
+          {!pomodoro.interval ? (
             <PlayCircle size={30} />
           ) : (
             <PauseCircle size={30} />

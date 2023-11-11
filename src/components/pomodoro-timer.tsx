@@ -4,8 +4,8 @@ import { PomodoroData, PomodoroStatus } from "../types/pomodoro";
 import { Button } from "./ui/button";
 
 const timeForPomodoroStatusInSeconds: Record<PomodoroStatus, number> = {
-  [PomodoroStatus.FOCUS]: 0.15 * 60,
-  [PomodoroStatus.SHORT_BREAK]: 0.1 * 60,
+  [PomodoroStatus.FOCUS]: 25 * 60,
+  [PomodoroStatus.SHORT_BREAK]: 5 * 60,
   [PomodoroStatus.LONG_BREAK]: 20 * 60,
 };
 
@@ -14,6 +14,7 @@ export const PomodoroTimer: React.FC = () => {
     time: timeForPomodoroStatusInSeconds[PomodoroStatus.FOCUS],
     status: PomodoroStatus.FOCUS,
     interval: undefined,
+    breaks: 0,
   } as PomodoroData);
 
   const minutesLeft = Math.floor(pomodoro.time / 60);
@@ -31,11 +32,23 @@ export const PomodoroTimer: React.FC = () => {
       if (timeUpdated === 0) {
         switch (currentPomodoroData.status) {
           case PomodoroStatus.FOCUS:
-            return {
-              ...currentPomodoroData,
-              time: timeForPomodoroStatusInSeconds[PomodoroStatus.SHORT_BREAK],
-              status: PomodoroStatus.SHORT_BREAK,
-            };
+            if (currentPomodoroData.breaks < 3) {
+              return {
+                ...currentPomodoroData,
+                time: timeForPomodoroStatusInSeconds[
+                  PomodoroStatus.SHORT_BREAK
+                ],
+                status: PomodoroStatus.SHORT_BREAK,
+                breaks: currentPomodoroData.breaks + 1,
+              };
+            } else {
+              return {
+                ...currentPomodoroData,
+                time: timeForPomodoroStatusInSeconds[PomodoroStatus.LONG_BREAK],
+                status: PomodoroStatus.LONG_BREAK,
+                breaks: 0,
+              };
+            }
           default:
             return {
               ...currentPomodoroData,

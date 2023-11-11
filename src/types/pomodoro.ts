@@ -8,5 +8,5 @@ export type PomodoroData = {
   status: PomodoroStatus;
   time: number;
   interval: NodeJS.Timeout | undefined;
-  breaks?: number;
+  breaks: number;
 };

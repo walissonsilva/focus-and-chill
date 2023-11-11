@@ -3,3 +3,5 @@
 // whether you're running in development or production).
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
+
+declare module "*.mp3"; // '*.wav' if you're using wav format

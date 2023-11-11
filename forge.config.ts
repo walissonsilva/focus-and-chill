@@ -6,21 +6,15 @@ import { MakerRpm } from "@electron-forge/maker-rpm";
 import { VitePlugin } from "@electron-forge/plugin-vite";
 
 const config: ForgeConfig = {
-  packagerConfig: {},
+  packagerConfig: {
+    icon: "./src/assets/icon.png",
+  },
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({}),
     new MakerZIP({}, ["darwin"]),
     new MakerRpm({}),
     new MakerDeb({}),
-    {
-      name: "@electron-forge/maker-rpm",
-      config: {
-        options: {
-          homepage: "http://example.com",
-        },
-      },
-    },
   ],
   plugins: [
     new VitePlugin({

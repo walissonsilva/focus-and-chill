@@ -5,13 +5,13 @@ import { SoundToggle } from "./sound-toggle";
 
 export const Screen = () => {
   return (
-    <main className="p-12">
+    <main className="pt-12 px-12 pb-4">
       <Header />
 
-      <section className="flex h-[19.5rem] items-center justify-center gap-8">
+      <section className="flex mt-10 items-center justify-center gap-8">
         <PomodoroTimer initialPomodoroTimerInMinutes={25} />
 
-        <section className="flex flex-wrap max-w-[200px] gap-4">
+        <section className="grid grid-rows-2 grid-cols-2 gap-4">
           <SoundToggle
             icon={<Coffee />}
             soundPath="src/sounds/coffee-shop.mp3"

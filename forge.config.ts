@@ -6,15 +6,23 @@ import { MakerRpm } from "@electron-forge/maker-rpm";
 import { VitePlugin } from "@electron-forge/plugin-vite";
 
 const config: ForgeConfig = {
-  packagerConfig: {
-    icon: "./src/assets/icon.png",
-  },
+  packagerConfig: {},
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({}),
     new MakerZIP({}, ["darwin"]),
-    new MakerRpm({}),
-    new MakerDeb({}),
+    new MakerRpm({
+      options: {
+        productName: "Focus & Chillout",
+        icon: "src/assets/icon.png",
+      },
+    }),
+    new MakerDeb({
+      options: {
+        productName: "Focus & Chillout",
+        icon: "src/assets/icon.png",
+      },
+    }),
   ],
   plugins: [
     new VitePlugin({

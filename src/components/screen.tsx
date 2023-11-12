@@ -12,9 +12,8 @@ import music2 from "../sounds/musics/save-as.mp3";
 import music3 from "../sounds/musics/lifelike.mp3";
 import music4 from "../sounds/musics/lofi-study.mp3";
 import music5 from "../sounds/musics/once-in-paris.mp3";
-import music6 from "../sounds/musics/easy-lifestyle.mp3";
-import music7 from "../sounds/musics/floating-abstract.mp3";
-import music8 from "../sounds/musics/lofi-chill-medium-version.mp3";
+import music6 from "../sounds/musics/floating-abstract.mp3";
+import music7 from "../sounds/musics/lofi-chill-medium-version.mp3";
 
 export const Screen = () => {
   return (
@@ -37,7 +36,6 @@ export const Screen = () => {
               music5,
               music6,
               music7,
-              music8,
             ]}
           />
           <SoundToggle icon={<Bird />} soundPaths={[BirdsAudio]} />

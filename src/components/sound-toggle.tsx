@@ -11,7 +11,7 @@ export const SoundToggle: React.FC<SoundToggleProps> = ({
   soundPaths,
 }) => {
   const [audio, setAudio] = useState<HTMLAudioElement>(
-    new Audio(soundPaths[Math.floor(Math.random() * soundPaths.length)]),
+    new Audio(soundPaths[Math.floor(Math.random() * soundPaths.length)])
   );
   const [pressed, setPressed] = useState(false);
 
@@ -30,9 +30,7 @@ export const SoundToggle: React.FC<SoundToggleProps> = ({
         audio.play();
         audio.addEventListener("ended", () => {
           setAudio(
-            new Audio(
-              soundPaths[Math.floor(Math.random() * soundPaths.length)],
-            ),
+            new Audio(soundPaths[Math.floor(Math.random() * soundPaths.length)])
           );
         });
       } else {
@@ -48,7 +46,7 @@ export const SoundToggle: React.FC<SoundToggleProps> = ({
       audio.play();
       audio.addEventListener("ended", () => {
         setAudio(
-          new Audio(soundPaths[Math.floor(Math.random() * soundPaths.length)]),
+          new Audio(soundPaths[Math.floor(Math.random() * soundPaths.length)])
         );
       });
     }
@@ -57,11 +55,11 @@ export const SoundToggle: React.FC<SoundToggleProps> = ({
   return (
     <Toggle
       variant="outline"
-      className="h-20 w-20"
+      className="h-12 w-12 not-draggable"
       onPressedChange={onPressedChange}
     >
       {cloneElement(icon, {
-        size: 50,
+        size: 22,
       })}
     </Toggle>
   );

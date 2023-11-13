@@ -13,13 +13,13 @@ const config: ForgeConfig = {
     new MakerZIP({}, ["darwin"]),
     new MakerRpm({
       options: {
-        productName: "Focus & Chillout",
+        productName: "Focus & Chill",
         icon: "src/assets/icon.png",
       },
     }),
     new MakerDeb({
       options: {
-        productName: "Focus & Chillout",
+        productName: "Focus & Chill",
         icon: "src/assets/icon.png",
       },
     }),

@@ -17,15 +17,16 @@ import music7 from "../sounds/musics/lofi-chill-medium-version.mp3";
 
 export const Screen = () => {
   return (
-    <main className="pt-12 px-12 pb-4">
+    <main className="pt-8 px-8 pb-4 draggable rounded-lg">
       <Header />
 
-      <section className="flex mt-10 items-center justify-center gap-8">
+      <section className="flex flex-col mt-6 justify-center gap-4">
         <PomodoroTimer />
 
-        <section className="grid grid-rows-2 grid-cols-2 gap-4">
+        <section className="flex justify-between align-center gap-4">
           <SoundToggle icon={<Coffee />} soundPaths={[CoffeeAudio]} />
           <SoundToggle icon={<CloudRain />} soundPaths={[RainAudio]} />
+          <SoundToggle icon={<Bird />} soundPaths={[BirdsAudio]} />
           <SoundToggle
             icon={<Music />}
             soundPaths={[
@@ -38,7 +39,6 @@ export const Screen = () => {
               music7,
             ]}
           />
-          <SoundToggle icon={<Bird />} soundPaths={[BirdsAudio]} />
         </section>
       </section>
     </main>

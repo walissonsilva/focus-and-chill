@@ -58,6 +58,16 @@
   }
 }
 
+@layer components {
+  .draggable {
+    -webkit-app-region: drag;
+  }
+
+  .not-draggable {
+    -webkit-app-region: no-drag;
+  }
+}
+
 body,
 button,
 select,
@@ -65,4 +75,3 @@ input,
 textarea {
   font-family: "Raleway", sans-serif;
 }
-

@@ -1,6 +1,6 @@
 {
-  "name": "focus-and-chillout",
-  "productName": "focus-and-chillout",
+  "name": "focus-and-chill",
+  "productName": "focus-and-chill",
   "version": "0.1.1",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",

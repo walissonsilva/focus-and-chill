@@ -1,5 +1,5 @@
 import { Moon, Sun } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
 export const Header = () => {
@@ -22,13 +22,20 @@ export const Header = () => {
 
   return (
     <header className="flex justify-between align-center">
-      <h1 className="text-2xl font-regular">
+      <h1 className="text-2xl font-normal mt-[6px]">
         Focus<span className="text-primary font-semibold mx-[1px]">&</span>
-        Chillout
+        Chill
       </h1>
-      <Button variant="outline" size="icon" onClick={toggleTheme}>
-        {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-      </Button>
+      <div className="flex gap-2">
+        <Button
+          className="not-draggable"
+          variant="outline"
+          size="icon"
+          onClick={toggleTheme}
+        >
+          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+        </Button>
+      </div>
     </header>
   );
 };

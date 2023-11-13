@@ -121,7 +121,7 @@ export const PomodoroTimer: React.FC = () => {
   return (
     <section
       id="timer"
-      className="flex flex-col gap-2 flex-1 border-[1px] border-solid border-text-muted rounded-sm py-4 px-12"
+      className="flex flex-col gap-2 flex-1 border-[1px] border-solid border-text-muted rounded-lg py-4 px-12"
     >
       <h2 className="text-center text-sm font-light">
         {pomodoro.status === PomodoroStatus.FOCUS ? "Focus Time" : "Break Time"}
@@ -136,10 +136,16 @@ export const PomodoroTimer: React.FC = () => {
             timeForPomodoroStatusInSeconds[PomodoroStatus.FOCUS]
           }
           onClick={onStop}
+          className="not-draggable"
         >
           <StopCircle size={30} />
         </Button>
-        <Button variant="ghost" size="icon" onClick={onPlayOrPause}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onPlayOrPause}
+          className="not-draggable"
+        >
           {!pomodoro.interval ? (
             <PlayCircle size={30} />
           ) : (

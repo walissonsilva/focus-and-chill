@@ -1,4 +1,4 @@
-# Focus&Chillout
+# Focus&Chill
 
 An Electron app to improve your productivity with focus and chill out sounds.
 

@@ -3,6 +3,9 @@ import { useCallback, useEffect, useState } from "react";
 import { PomodoroData, PomodoroStatus } from "../types/pomodoro";
 import { Button } from "./ui/button";
 
+import afterBreakAudio from "../sounds/effects/after-break.mp3";
+import afterFocusAudio from "../sounds/effects/after-focus.mp3";
+
 const timeForPomodoroStatusInSeconds: Record<PomodoroStatus, number> = {
   [PomodoroStatus.FOCUS]: 25 * 60,
   [PomodoroStatus.SHORT_BREAK]: 5 * 60,
@@ -22,7 +25,7 @@ export const PomodoroTimer: React.FC = () => {
 
   function getFormattedLeftTime() {
     return `${String(minutesLeft).padStart(2, "0")}:${String(
-      secondsLeft,
+      secondsLeft
     ).padStart(2, "0")}`;
   }
 
@@ -85,7 +88,7 @@ export const PomodoroTimer: React.FC = () => {
     setPomodoro((currentPomodoro) => ({
       ...currentPomodoro,
       interval: undefined,
-      time: timeForPomodoroStatusInSeconds[PomodoroStatus.FOCUS],
+      time: timeForPomodoroStatusInSeconds[pomodoro.status],
     }));
   }
 
@@ -93,14 +96,14 @@ export const PomodoroTimer: React.FC = () => {
     if (!pomodoro.interval) return;
 
     if (pomodoro.status === PomodoroStatus.FOCUS) {
-      const audio = new Audio("src/sounds/effects/after-break.mp3");
+      const audio = new Audio(afterBreakAudio);
       audio.play();
 
       new Notification("Break timer is over", {
         body: "Start your focus time!",
       });
     } else {
-      const audio = new Audio("src/sounds/effects/after-focus.mp3");
+      const audio = new Audio(afterFocusAudio);
       audio.play();
 
       new Notification("Pomodoro timer is over", {

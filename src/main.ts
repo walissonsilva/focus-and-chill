@@ -17,7 +17,7 @@ const createWindow = () => {
     resizable: false,
     autoHideMenuBar: true,
     titleBarStyle: "hidden",
-    titleBarOverlay: true,
+    titleBarOverlay: false,
     frame: false,
     roundedCorners: true,
   });

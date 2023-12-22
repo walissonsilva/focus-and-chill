@@ -5,14 +5,11 @@ import { Button } from "./ui/button";
 
 import afterBreakAudio from "../sounds/effects/after-break.mp3";
 import afterFocusAudio from "../sounds/effects/after-focus.mp3";
-
-const timeForPomodoroStatusInSeconds: Record<PomodoroStatus, number> = {
-  [PomodoroStatus.FOCUS]: 25 * 60,
-  [PomodoroStatus.SHORT_BREAK]: 5 * 60,
-  [PomodoroStatus.LONG_BREAK]: 20 * 60,
-};
+import { usePomodoro } from "../hooks/usePomodoro";
 
 export const PomodoroTimer: React.FC = () => {
+  const { timeForPomodoroStatusInSeconds } = usePomodoro();
+
   const [pomodoro, setPomodoro] = useState({
     time: timeForPomodoroStatusInSeconds[PomodoroStatus.FOCUS],
     status: PomodoroStatus.FOCUS,
